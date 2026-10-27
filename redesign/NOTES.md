@@ -40,3 +40,14 @@ the cap table and the statement; it also switches to after hours from the bar.
 ## for the owner
 
 - The risk disclosure is a draft and says so; it needs legal review before a real market opens.
+
+## measured live (2026-10-26, https://vibefund.commandagi.app, this machine's Chromium)
+
+- `python redesign/perf.py` (throttled 4G: 150 ms RTT, 1.6 Mbit/s; 4x CPU; cold cache): **390 px LCP 1.47 s, CLS
+  0.001; 1440 px LCP 1.51 s, CLS 0.003.** Budget: LCP < 2.5 s, CLS < 0.1. Script before interaction: `app.js`, 31 KB.
+  INP was not measured; the demo's handlers render at most two small tables per input.
+- `python redesign/shoot.py https://vibefund.commandagi.app/`: the first run passed every check (the bid fills 1,370,
+  130 rest, the cap table and the statement show HALV, after hours works) except one aborted film request when this
+  machine's network changed (`ERR_NETWORK_CHANGED`); a second run met the same network change on the es page. The
+  same script passes clean on the same files served locally.
+- Every route and asset answers 200 live (`/`, `/es/`, `/zh/`, `style.css`, `app.js`, the films, `og.jpg`).
