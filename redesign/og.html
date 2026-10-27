@@ -1,0 +1,17 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../style.css">
+<style>
+body { margin: 0; padding: 0; width: 1200px; height: 630px; overflow: hidden; position: relative; background: #f4eedd; }
+.bg { position: absolute; inset: 0; background: url(.raw/plate.png) center / cover; filter: saturate(.8) sepia(.12); }
+.bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, #f4eedd 0%, #f4eedd 42%, rgb(244 238 221 / 0) 78%); }
+.in { position: absolute; inset: 0; padding: 56px 64px; display: grid; align-content: space-between; }
+.in .wordmark { width: 300px; }
+h1 { font: 400 84px/.92 var(--serif); letter-spacing: -.02em; color: #102b25; max-width: 9.5em; }
+h1 em { font-style: normal; color: #3c524b; display: block; }
+.rule { height: 5px; border-top: 3px solid #c5aa75; border-bottom: 1px solid #c5aa75; width: 520px; margin-bottom: 14px; }
+p { font: 500 15px/1.3 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #102b25; }
+.touch { width: 180px; height: 180px; }
+</style></head>
+<body><div class="bg"></div><div class="in"><div id="wm"></div><div><div class="rule"></div><h1>Startup shares, <em>quoted to the cent.</em></h1></div><p>Sample market · simulated trading</p></div>
+<script>fetch('../wordmark.svg').then(r => r.text()).then(t => { document.getElementById('wm').innerHTML = t.replace('<svg ', '<svg class="wordmark" '); });</script>
+</body></html>

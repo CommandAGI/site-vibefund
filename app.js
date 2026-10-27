@@ -4,7 +4,8 @@
  * The startups, their prices and their charts are sample data written into this file: no exchange, no quote feed.
  * A trade moves numbers in this browser's localStorage and nowhere else: the page sends nothing to anyone but the
  * hosting provider's visit count.
- * Every locale's page carries this one file; the page's `lang` picks the words.
+ * Every locale's page carries this one file; the page's `lang` picks the words. Halvard Ropeworks (HALV), the
+ * order book's company, is fictional: its book and cap table are written here too.
  */
 'use strict';
 
@@ -25,6 +26,13 @@ const STARTUPS = [
 
 const T = {
     en: {
+        fill: (q, p) => `${q} @ ${p}`,
+        bidNone: 'No ask at or under your limit. Your bid rests on the book.',
+        bidDone: (q, p) => `Filled ${q} shares of Halvard at an average of ${p}.`,
+        bidPart: (q, r) => `Filled ${q}; ${r} rest on the book at your limit.`,
+        badLimit: 'Set a limit price above zero.',
+        spread: s => `spread ${s}`,
+        capNames: ['Founders', 'Staff option pool', 'Seed round', 'Public float', 'You'],
         company: 'Company', last: 'Last', change: '24h', volume: 'Volume', chart: '7d', trade: 'Trade',
         cash: 'Cash', holdings: 'Positions', total: 'Account value', dayPl: 'Open P&L',
         emptyHoldings: 'No positions yet. Pick a row, set a quantity and buy.',
@@ -44,6 +52,13 @@ const T = {
         allSample: 'Sample market. Simulated trading. No money moves.',
     },
     es: {
+        fill: (q, p) => `${q} @ ${p}`,
+        bidNone: 'No hay ventas a tu límite o por debajo. Tu oferta queda en el libro.',
+        bidDone: (q, p) => `Ejecutadas ${q} acciones de Halvard a un precio medio de ${p}.`,
+        bidPart: (q, r) => `Ejecutadas ${q}; ${r} quedan en el libro a tu límite.`,
+        badLimit: 'Pon un precio límite mayor que cero.',
+        spread: s => `diferencial ${s}`,
+        capNames: ['Fundadores', 'Opciones del equipo', 'Ronda semilla', 'Capital flotante', 'Tú'],
         company: 'Empresa', last: 'Último', change: '24 h', volume: 'Volumen', chart: '7 d', trade: 'Operar',
         cash: 'Efectivo', holdings: 'Posiciones', total: 'Valor de la cuenta', dayPl: 'G/P abierta',
         emptyHoldings: 'Aún no hay posiciones. Elige una fila, pon una cantidad y compra.',
@@ -63,6 +78,13 @@ const T = {
         allSample: 'Mercado de muestra. Operaciones simuladas. No se mueve dinero.',
     },
     'zh-Hans': {
+        fill: (q, p) => `${q} @ ${p}`,
+        bidNone: '没有等于或低于你限价的卖单。你的买单挂在订单簿上。',
+        bidDone: (q, p) => `以均价 ${p} 成交 Halvard ${q} 股。`,
+        bidPart: (q, r) => `已成交 ${q} 股；${r} 股按你的限价挂在订单簿上。`,
+        badLimit: '请填写大于零的限价。',
+        spread: s => `价差 ${s}`,
+        capNames: ['创始人', '员工期权池', '种子轮', '公开流通', '你'],
         company: '公司', last: '最新价', change: '24 小时', volume: '成交量', chart: '7 天', trade: '交易',
         cash: '现金', holdings: '持仓', total: '账户总值', dayPl: '浮动盈亏',
         emptyHoldings: '还没有持仓。选一行，填入数量，然后买入。',
@@ -131,6 +153,11 @@ function readState() {
 }
 
 const state = readState();
+/** Halvard Ropeworks: fictional, the order book's company. Its last price is where the demo values a position. */
+const HALV = { ticker: 'HALV', name: 'Halvard Ropeworks', blurb: '', price: 14.62, history: [], change: 0, volume: 0 };
+/** Everything a position can be in: the market's twelve and Halvard. */
+const ALL = [...MARKET, HALV];
+
 let selected = MARKET[0].ticker;
 let sortBy = 'change';
 let filter = '';
@@ -161,7 +188,8 @@ function spark(history, up) {
 function renderTicker() {
     const track = el('ticker-track');
     if (!track) return;
-    track.innerHTML = MARKET.slice(0, 8).map(s => `<span class="ticker__item"><b>${s.ticker}</b><span>${money(s.price)}</span><span class="${s.change >= 0 ? 'up' : 'down'}">${s.change >= 0 ? '+' : '−'}${pct.format(Math.abs(s.change))}%</span></span>`).join('');
+    const items = MARKET.map(s => `<span class="ticker__item"><b>${s.ticker}</b><span>${money(s.price)}</span><span class="${s.change >= 0 ? 'up' : 'down'}">${pct.format(Math.abs(s.change))}%</span></span>`).join('');
+    track.innerHTML = items + items;
 }
 
 function visibleMarket() {
@@ -188,10 +216,10 @@ function renderMarket() {
         <tr data-ticker="${s.ticker}" aria-selected="${s.ticker === selected}">
             <td><span class="co"><b>${s.name}</b><span>${s.blurb}</span></span></td>
             <td class="num">${money(s.price)}</td>
-            <td class="num ${s.change >= 0 ? 'up' : 'down'}">${s.change >= 0 ? '+' : '−'}${pct.format(Math.abs(s.change))}%</td>
+            <td class="num ${s.change >= 0 ? 'up' : 'down'}"><span class="sr-only">${s.change >= 0 ? '+' : '−'}</span>${pct.format(Math.abs(s.change))}%</td>
             <td class="num hide-sm">${compact.format(s.volume)}</td>
-            <td class="num hide-sm">${spark(s.history, s.change >= 0)}</td>
-            <td><button type="button" class="btn btn--tiny btn--buy" data-trade="${s.ticker}">${t.trade}</button></td>
+            <td class="hide-sm">${spark(s.history, s.change >= 0)}</td>
+            <td><button type="button" class="btn btn--small" data-trade="${s.ticker}">${t.trade}</button></td>
         </tr>`).join('');
 }
 
@@ -202,15 +230,16 @@ function positionOf(ticker) {
 
 function renderPortfolio() {
     const body = el('positions-body');
-    const marketValue = MARKET.reduce((sum, s) => {
+    const marketValue = ALL.reduce((sum, s) => {
         const p = positionOf(s.ticker);
         return sum + (p ? p.qty * s.price : 0);
     }, 0);
-    const cost = MARKET.reduce((sum, s) => {
+    const cost = ALL.reduce((sum, s) => {
         const p = positionOf(s.ticker);
         return sum + (p ? p.qty * p.avg : 0);
     }, 0);
     const pl = marketValue - cost;
+    renderCap();
 
     if (el('stat-cash')) el('stat-cash').textContent = money(state.cash);
     if (el('stat-holdings')) el('stat-holdings').textContent = money(marketValue);
@@ -221,7 +250,7 @@ function renderPortfolio() {
     }
     if (!body) return;
 
-    const held = MARKET.filter(s => positionOf(s.ticker));
+    const held = ALL.filter(s => positionOf(s.ticker));
     if (!held.length) {
         body.innerHTML = `<tr><td colspan="6" class="empty">${t.emptyHoldings}</td></tr>`;
         return;
@@ -243,7 +272,7 @@ function renderPortfolio() {
 }
 
 function renderTicket() {
-    const s = MARKET.find(m => m.ticker === selected);
+    const s = ALL.find(m => m.ticker === selected);
     const price = el('ticket-price');
     if (price) price.textContent = `${money(s.price)} USDC`;
     if (el('ticket-name')) el('ticket-name').textContent = s.name;
@@ -258,7 +287,7 @@ function quantity() {
 }
 
 function renderEstimate() {
-    const s = MARKET.find(m => m.ticker === selected);
+    const s = ALL.find(m => m.ticker === selected);
     const qty = quantity();
     const cost = qty * s.price;
     const fee = cost * FEE;
@@ -285,7 +314,7 @@ function toast(text) {
 }
 
 function buy() {
-    const s = MARKET.find(m => m.ticker === selected);
+    const s = ALL.find(m => m.ticker === selected);
     const qty = quantity();
     if (!qty) return toast(t.noQty);
     const cost = qty * s.price * (1 + FEE);
@@ -302,7 +331,7 @@ function buy() {
 }
 
 function sell() {
-    const s = MARKET.find(m => m.ticker === selected);
+    const s = ALL.find(m => m.ticker === selected);
     const qty = quantity();
     if (!qty) return toast(t.noQty);
     const p = positionOf(selected);
@@ -322,7 +351,10 @@ function sell() {
 function reset() {
     state.cash = START_CASH;
     state.positions = {};
+    book = freshBook();
+    fills.length = 0;
     save();
+    renderBook();
     renderPortfolio();
     renderEstimate();
     renderMarket();
@@ -340,19 +372,20 @@ function renderRaise() {
     const post = pre + amount;
     const equity = post ? (pre / post) * 100 : 0;
     el('raise-out').innerHTML = `
-        <div><span>${t.pricePerShare}</span><b>${money(pricePerShare)} USDC</b></div>
-        <div><span>${t.newShares}</span><b>${compact.format(Math.round(newShares))}</b></div>
-        <div><span>${t.postMoney}</span><b>${money(post)} USDC</b></div>
-        <div><span>${t.founderEquity}</span><b>${pct.format(equity)}%</b></div>
-        <div><span>${t.dilution}</span><b>${pct.format(100 - equity)}%</b></div>`;
+        <div><dt>${t.pricePerShare}</dt><dd>${money(pricePerShare)} USDC</dd></div>
+        <div><dt>${t.newShares}</dt><dd>${compact.format(Math.round(newShares))}</dd></div>
+        <div><dt>${t.postMoney}</dt><dd>${money(post)} USDC</dd></div>
+        <div><dt>${t.founderEquity}</dt><dd>${pct.format(equity)}%</dd></div>
+        <div><dt>${t.dilution}</dt><dd>${pct.format(100 - equity)}%</dd></div>`;
+    el('split-a')?.style.setProperty('--w', `${equity}%`);
+    el('split-b')?.style.setProperty('--w', `${100 - equity}%`);
 }
 
 /** The language button works with or without the browser's invoker commands. */
 function wireLanguage() {
-    const button = document.querySelector('.lang-btn');
     const dialog = el('lang-dialog');
-    if (!button || !dialog) return;
-    button.addEventListener('click', event => {
+    if (!dialog) return;
+    for (const button of document.querySelectorAll('.lang-btn')) button.addEventListener('click', event => {
         if (typeof dialog.showModal === 'function' && !dialog.open) {
             event.preventDefault();
             dialog.showModal();
@@ -396,7 +429,7 @@ function wire() {
     el('sort')?.addEventListener('change', event => { sortBy = event.target.value; renderMarket(); });
     el('qty')?.addEventListener('input', renderEstimate);
     el('qty-max')?.addEventListener('click', () => {
-        const s = MARKET.find(m => m.ticker === selected);
+        const s = ALL.find(m => m.ticker === selected);
         const input = el('qty');
         if (input) input.value = String(Math.max(0, Math.floor(state.cash / (s.price * (1 + FEE)))));
         renderEstimate();
@@ -406,10 +439,12 @@ function wire() {
     el('reset')?.addEventListener('click', reset);
     for (const id of ['raise-amount', 'raise-pre', 'raise-shares']) el(id)?.addEventListener('input', renderRaise);
     wireLanguage();
+    el('bid-form')?.addEventListener('submit', event => { event.preventDefault(); placeBid(); });
+    for (const b of document.querySelectorAll('[data-theme-toggle]')) b.addEventListener('click', toggleTheme);
+    wireFilms();
+    wireKeys();
 }
 
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
-else start();
 
 function start() {
     const qty = el('qty');
@@ -419,6 +454,207 @@ function start() {
     renderPortfolio();
     renderTicket();
     renderRaise();
+    renderBook();
+    renderTheme();
     wire();
     if (el('sample-note')) el('sample-note').textContent = t.allSample;
 }
+
+
+/* ---- The order book of Halvard Ropeworks (fictional) ---- */
+
+const HALV_SHARES = 8_000_000;
+/** Holders before anyone bids: founders, the staff pool, the seed round, the float. */
+const CAP = [4_400_000, 960_000, 1_840_000, 800_000];
+const freshBook = () => ({
+    asks: [[14.64, 420], [14.66, 310], [14.69, 640], [14.72, 900], [14.76, 1_250], [14.81, 2_000]],
+    bids: [[14.58, 380], [14.55, 520], [14.51, 760], [14.47, 1_100], [14.42, 1_600], [14.36, 2_400]],
+    yours: null,
+});
+let book = freshBook();
+const fills = [];
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const sleep = ms => new Promise(r => setTimeout(r, reduceMotion.matches ? 0 : ms));
+
+function ladderRows(levels, side) {
+    return levels.map(([p, q]) => {
+        const yours = side === 'bid' && book.yours && book.yours[0] === p;
+        return `<li data-p="${p}"${yours ? ' class="is-yours"' : ''}><span class="p">${money(p)}</span><span class="s">${nf0.format(q)}</span></li>`;
+    }).join('');
+}
+
+function renderBook() {
+    const asks = el('ladder-asks'), bids = el('ladder-bids');
+    if (!asks || !bids) return;
+    const bidLevels = book.bids.slice();
+    if (book.yours) {
+        const at = bidLevels.findIndex(([p]) => p <= book.yours[0]);
+        const same = bidLevels.findIndex(([p]) => p === book.yours[0]);
+        if (same >= 0) bidLevels[same] = [book.yours[0], bidLevels[same][1] + book.yours[1]];
+        else bidLevels.splice(at < 0 ? bidLevels.length : at, 0, book.yours);
+    }
+    const max = Math.max(...book.asks.map(l => l[1]), ...bidLevels.map(l => l[1]), 1);
+    asks.innerHTML = ladderRows(book.asks.slice().reverse(), 'ask');
+    bids.innerHTML = ladderRows(bidLevels, 'bid');
+    for (const li of [...asks.children, ...bids.children]) {
+        const q = Number(li.querySelector('.s').textContent.replace(/\D/g, ''));
+        li.style.setProperty('--d', `${(q / max) * 100}%`);
+    }
+    const bestAsk = book.asks[0]?.[0], bestBid = bidLevels[0]?.[0];
+    const mid = bestAsk && bestBid ? (bestAsk + bestBid) / 2 : bestAsk ?? bestBid ?? HALV.price;
+    if (el('ladder-mid')) el('ladder-mid').textContent = money(mid);
+    if (el('ladder-spread')) el('ladder-spread').textContent = bestAsk && bestBid ? t.spread(money(bestAsk - bestBid)) : '';
+    for (const [k, v] of [['bid', bestBid], ['ask', bestAsk], ['last', HALV.price]]) {
+        const node = document.querySelector(`[data-quote="${k}"]`);
+        if (node && v) node.textContent = money(v);
+    }
+    renderFills();
+    renderCap();
+}
+
+function renderFills() {
+    const list = el('bid-fills');
+    if (!list) return;
+    if (!fills.length) {
+        list.innerHTML = `<li class="empty">${list.dataset.empty ?? list.textContent.trim()}</li>`;
+        list.dataset.empty ??= list.textContent.trim();
+    }
+    const filled = fills.reduce((n, f) => n + f.q, 0);
+    const cost = fills.reduce((n, f) => n + f.q * f.p, 0);
+    const fee = cost * FEE;
+    if (el('sum-filled')) el('sum-filled').textContent = nf0.format(filled);
+    if (el('sum-avg')) el('sum-avg').textContent = filled ? money(cost / filled) : '—';
+    if (el('sum-fee')) el('sum-fee').textContent = money(fee);
+    if (el('sum-total')) el('sum-total').textContent = money(cost + fee);
+    if (el('sum-rest')) el('sum-rest').textContent = nf0.format(book.yours?.[1] ?? 0);
+}
+
+function renderCap() {
+    const bar = el('cap-bar'), body = el('cap-body');
+    if (!bar || !body) return;
+    const you = positionOf('HALV')?.qty ?? 0;
+    const rows = [CAP[0], CAP[1], CAP[2], Math.max(0, CAP[3] - you), you];
+    if (bar.children.length !== 5) bar.innerHTML = '<i></i><i></i><i></i><i></i><i></i>';
+    rows.forEach((q, i) => bar.children[i].style.setProperty('--w', `${(q / HALV_SHARES) * 100}%`));
+    const changed = body.dataset.you !== String(you);
+    body.dataset.you = String(you);
+    body.innerHTML = rows.map((q, i) => `<tr class="${i === 4 ? `is-you${changed && you ? ' is-changed' : ''}` : ''}"><td><span class="sw cap-sw-${i}" aria-hidden="true"></span>${t.capNames[i]}</td><td class="num">${nf0.format(q)}</td><td class="num">${pct.format((q / HALV_SHARES) * 100)}%</td></tr>`).join('');
+    body.querySelectorAll('.sw').forEach((sw, i) => sw.style.setProperty('background', getComputedStyle(bar.children[i]).background));
+}
+
+let bidding = false;
+/** A limit bid walks the asks from the cheapest; what is left rests on the book as the visitor's own bid. */
+async function placeBid() {
+    if (bidding) return;
+    const qty = Math.floor(Number(el('bid-qty')?.value));
+    const limit = Math.round(Number(el('bid-limit')?.value) * 100) / 100;
+    if (!(qty > 0)) return toast(t.noQty);
+    if (!(limit > 0)) return toast(t.badLimit);
+    // The worst case is the whole size at the limit: the demo cash must cover it before anything fills.
+    if (qty * limit * (1 + FEE) > state.cash) return toast(t.noCash);
+    bidding = true;
+    fills.length = 0;
+    el('bid-fills').innerHTML = '';
+    let left = qty;
+    while (left > 0 && book.asks.length && book.asks[0][0] <= limit) {
+        const [p, q] = book.asks[0];
+        const take = Math.min(q, left);
+        left -= take;
+        if (take === q) book.asks.shift(); else book.asks[0] = [p, q - take];
+        fills.push({ q: take, p });
+        const p0 = positionOf('HALV') ?? { qty: 0, avg: 0 };
+        state.positions.HALV = { qty: p0.qty + take, avg: (p0.qty * p0.avg + take * p) / (p0.qty + take) };
+        state.cash -= take * p * (1 + FEE);
+        HALV.price = p;
+        const li = document.createElement('li');
+        li.className = 'is-new';
+        li.innerHTML = `<span>${t.fill(nf0.format(take), money(p))}</span><span>${money(take * p)}</span>`;
+        el('bid-fills').append(li);
+        renderBook();
+        document.querySelector(`#ladder-asks li[data-p="${p}"]`)?.classList.add('is-taken');
+        await sleep(420);
+    }
+    book.yours = left > 0 ? [limit, left + (book.yours?.[0] === limit ? book.yours[1] : 0)] : book.yours;
+    save();
+    renderBook();
+    renderPortfolio();
+    renderMarket();
+    renderEstimate();
+    const filled = qty - left;
+    if (!filled) {
+        el('bid-fills').innerHTML = `<li class="empty">${t.bidNone}</li>`;
+        toast(t.bidNone);
+    } else {
+        const avg = fills.reduce((n, f) => n + f.q * f.p, 0) / filled;
+        toast(left ? t.bidPart(nf0.format(filled), nf0.format(left)) : t.bidDone(nf0.format(filled), money(avg)));
+    }
+    bidding = false;
+}
+
+/* ---- After hours: the night paper, chosen by the visitor or by the system ---- */
+
+function currentTheme() {
+    try { const v = localStorage.getItem('vibefund-theme'); if (v === 'night' || v === 'day') return v; } catch { /* no storage */ }
+    return matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day';
+}
+function renderTheme(theme = currentTheme()) {
+    document.documentElement.dataset.theme = theme;
+    for (const b of document.querySelectorAll('[data-theme-toggle]')) {
+        b.setAttribute('aria-pressed', String(theme === 'night'));
+        if (b.dataset.on !== b.dataset.off) b.textContent = theme === 'night' ? b.dataset.off : b.dataset.on;
+    }
+}
+function toggleTheme() {
+    const next = document.documentElement.dataset.theme === 'night' ? 'day' : 'night';
+    try { localStorage.setItem('vibefund-theme', next); } catch { /* the choice lasts this visit */ }
+    if (document.startViewTransition && !reduceMotion.matches) document.startViewTransition(() => renderTheme(next));
+    else renderTheme(next);
+}
+
+/* ---- Films: play in view, never under reduced motion, always pausable ---- */
+
+function wireFilms() {
+    const films = [...document.querySelectorAll('[data-film]')];
+    let paused = reduceMotion.matches;
+    const label = () => {
+        for (const b of document.querySelectorAll('[data-film-toggle]')) {
+            b.textContent = paused ? b.dataset.play : b.dataset.pause;
+            b.setAttribute('aria-pressed', String(paused));
+        }
+    };
+    const seen = new Set();
+    const sync = () => films.forEach(v => (seen.has(v) && !paused ? v.play().catch(() => {}) : v.pause()));
+    const io = new IntersectionObserver(entries => {
+        for (const e of entries) {
+            if (e.isIntersecting) { if (e.target.preload === 'none') e.target.preload = 'auto'; seen.add(e.target); } else seen.delete(e.target);
+        }
+        sync();
+    }, { rootMargin: '200px 0px' });
+    films.forEach(v => io.observe(v));
+    for (const b of document.querySelectorAll('[data-film-toggle]')) b.addEventListener('click', () => { paused = !paused; label(); sync(); });
+    reduceMotion.addEventListener?.('change', () => { paused = reduceMotion.matches; label(); sync(); });
+    label();
+}
+
+/* ---- The function keys: F1–F6 jump, and the bar marks the section in view ---- */
+
+function wireKeys() {
+    const links = [...document.querySelectorAll('.fkeys__keys a')];
+    addEventListener('keydown', event => {
+        const n = /^F([1-6])$/.exec(event.key)?.[1];
+        if (!n || event.altKey || event.ctrlKey || event.metaKey) return;
+        const a = links[Number(n) - 1];
+        if (!a) return;
+        event.preventDefault();
+        document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+    });
+    const io = new IntersectionObserver(entries => {
+        for (const e of entries) if (e.isIntersecting)
+            for (const a of links) a.setAttribute('aria-current', String(a.getAttribute('href') === `#${e.target.id}`));
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    for (const a of links) { const s = document.querySelector(a.getAttribute('href')); if (s) io.observe(s); }
+}
+
+// Last, so every binding above exists before the first render.
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+else start();

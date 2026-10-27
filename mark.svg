@@ -1,4 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="vibeFund">
-  <rect x="1" y="1" width="30" height="30" rx="8" fill="#0b0f16" stroke="#1f3a2b"/>
-  <path d="M9 22V15M16 22V10M23 22V18" stroke="#8ef0a8" stroke-width="2.6" stroke-linecap="round"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#102b25"/><rect x="4" y="4" width="56" height="56" fill="none" stroke="#c5aa75" stroke-width="1.5"/><rect x="8" y="8" width="48" height="48" fill="none" stroke="#c5aa75" stroke-width="0.75"/><path d="M17 18h9l6 19 6-19h9L36 48h-8z" fill="#f4eedd"/></svg>

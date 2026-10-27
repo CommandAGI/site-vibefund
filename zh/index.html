@@ -2,251 +2,280 @@
 <html lang="zh-Hans">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; font-src 'self'; form-action 'none'; base-uri 'none'">
-<title>vibeFund — 交易初创公司的股权</title>
-<meta name="description" content="vibeFund 是 vibe 初创公司的市场：真实的公司，按股定价，以 USDC 结算。演示用示例公司和模拟资金在你的浏览器里交易。">
-<meta name="theme-color" content="#05070b">
-<meta property="og:title" content="vibeFund — 交易初创公司的股权">
-<meta property="og:description" content="真实的公司，按股定价，以 USDC 结算。CommandAGI 的一家公司。">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self' https://cloudflareinsights.com; font-src 'self'; form-action 'none'; base-uri 'none'">
+<title>VibeFund — 初创公司股份，报价精确到分</title>
+<meta name="description" content="VibeFund 是一个以 USDC 结算的初创公司股份市场。本页是演示：示例公司，模拟交易，任何数据都不会离开你的浏览器。">
+<meta name="theme-color" content="#f4eedd" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c1f1b" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="VibeFund — 初创公司股份，报价精确到分">
+<meta property="og:description" content="VibeFund 是一个以 USDC 结算的初创公司股份市场。本页是演示：示例公司，模拟交易，任何数据都不会离开你的浏览器。">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://vibefund.commandagi.app/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../touch-icon.png">
+<link rel="preload" href="../fonts/gloock.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/mona-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../media/plate.poster.webp" as="image" fetchpriority="high">
 <link rel="stylesheet" href="../style.css">
 <link rel="alternate" hreflang="en" href="/">
 <link rel="alternate" hreflang="es" href="/es/">
 <link rel="alternate" hreflang="zh-Hans" href="/zh/">
 </head>
 <body>
-<a class="skip" href="#market">跳到市场</a>
+<a class="skip" href="#book">跳到订单簿</a>
 
-<header class="head">
-  <div class="wrap head__in">
-    <a class="brand" href="/">
-      <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="1" y="1" width="30" height="30" rx="8" fill="#0b0f16" stroke="#1f3a2b"/><path d="M9 22V15M16 22V10M23 22V18" stroke="#8ef0a8" stroke-width="2.6" stroke-linecap="round"/></svg>
-      <span class="brand__word">vibeFund</span>
-    </a>
-    <nav aria-label="页面">
-      <a href="#market">市场</a>
-      <a href="#portfolio">持仓</a>
-      <a href="#raise">融资</a>
-      <a href="#questions">问答</a>
-    </nav>
-    <a class="btn btn--primary" href="#market">打开演示</a>
-  </div>
+<header class="mast">
+  <a class="mast__brand" href="/zh/"><svg class="wordmark" viewBox="-40 200 4417 1010" role="img" aria-label="VibeFund"><path d="M333 990 73 344Q30 235 -24 235H-27V225H293V235H289Q243 235 228.0 262.5Q213 290 233 339L411 789L594 339Q612 294 589.5 265.5Q567 237 513 235V225H708V235Q689 236 669.5 253.0Q650 270 633.5 294.5Q617 319 607 344L343 990Z M630 975V965H631Q667 965 689.0 943.0Q711 921 711 885V557Q711 519 695.5 498.0Q680 477 630 477V467H732Q783 467 810 456Q835 445 845 429H855V885Q855 921 877.0 943.0Q899 965 935 965H936V975ZM782 366Q746 366 722.5 342.5Q699 319 699 283Q699 247 722.5 223.5Q746 200 782 200Q817 200 840.5 224.0Q864 248 864 283Q864 318 840.5 342.0Q817 366 782 366Z M956 989V315Q956 279 933.5 257.0Q911 235 875 235V225H977Q1036 225 1058.0 214.0Q1080 203 1090 187H1100V551Q1123 506 1164.5 479.0Q1206 452 1256 452Q1315 452 1361.0 487.0Q1407 522 1433.5 582.0Q1460 642 1460 719Q1460 799 1430.5 860.0Q1401 921 1348.0 955.0Q1295 989 1224 989Q1105 989 1064 890L966 989ZM1195 972Q1248 972 1275 906Q1302 840 1302 712Q1302 600 1281 546Q1260 492 1215 492Q1175 492 1144.5 521.0Q1114 550 1100 586V837Q1104 899 1129.0 935.5Q1154 972 1195 972Z M1752 987Q1683 987 1629.5 953.0Q1576 919 1546.0 858.5Q1516 798 1516 720Q1516 640 1549.0 580.0Q1582 520 1639.5 486.5Q1697 453 1770 453Q1831 453 1878.5 477.0Q1926 501 1954.5 544.5Q1983 588 1987 645L1988 660H1652V665Q1652 771 1699.0 834.5Q1746 898 1825 898Q1873 898 1916.5 874.5Q1960 851 1987 811L1996 814Q1979 865 1943.0 904.0Q1907 943 1858.0 965.0Q1809 987 1752 987ZM1653 645H1856Q1856 566 1830.5 517.0Q1805 468 1759 468Q1715 468 1686.0 516.0Q1657 564 1653 645Z M1990 975 1992 965H1995Q2031 965 2053.0 943.0Q2075 921 2075 885V315Q2075 279 2053.0 257.0Q2031 235 1995 235L1994 225H2529L2559 427H2550Q2520 238 2312 238H2229V539H2307Q2357 539 2387.0 507.5Q2417 476 2417 426H2427V676H2417Q2417 622 2384.0 587.0Q2351 552 2297 552H2229V893Q2229 926 2252.0 945.5Q2275 965 2309 965L2310 975Z M2912 1003 2911 874Q2885 925 2832.0 957.0Q2779 989 2720 989Q2653 989 2612.5 945.0Q2572 901 2572 829V557Q2572 519 2557.0 498.0Q2542 477 2491 477V467H2592Q2643 467 2670 456Q2695 445 2705 429H2715V839Q2715 889 2735.0 919.0Q2755 949 2787 949Q2818 949 2851.0 922.5Q2884 896 2909 851V557Q2909 521 2891.0 499.0Q2873 477 2829 477V467H2930Q2981 467 3008 456Q3034 445 3044 429H3054L3053 885Q3053 921 3075.0 943.5Q3097 966 3133 966V975H3034Q3008 975 2988.0 976.5Q2968 978 2955 980Q2928 986 2917 1003Z M3112 975V965H3113Q3149 965 3171.0 943.0Q3193 921 3193 885V557Q3193 519 3177.5 498.0Q3162 477 3112 477V467H3211Q3262 467 3289 456Q3314 445 3324 429H3334L3335 569Q3361 517 3414.0 485.0Q3467 453 3526 453Q3593 453 3633.5 497.0Q3674 541 3674 613V885Q3674 921 3696.0 943.0Q3718 965 3754 965H3755V975H3450V965H3451Q3487 965 3509.0 943.0Q3531 921 3531 885V603Q3531 553 3511.5 523.0Q3492 493 3460 493Q3429 493 3395.5 519.5Q3362 546 3337 591V885Q3337 921 3359.0 943.0Q3381 965 3417 965H3418V975Z M4133 1013 4132 871Q4108 923 4060.0 956.5Q4012 990 3957 990Q3903 990 3860.0 956.0Q3817 922 3792.0 862.5Q3767 803 3767 728Q3767 644 3798.5 582.0Q3830 520 3886.0 486.5Q3942 453 4015 453Q4056 453 4082.0 465.5Q4108 478 4129 508V315Q4129 279 4106.5 257.0Q4084 235 4048 235V225H4150Q4200 225 4226.0 215.0Q4252 205 4263 187H4273V885Q4273 921 4295.0 943.0Q4317 965 4354 965V975H4252Q4208 975 4182.5 984.0Q4157 993 4143 1013ZM4012 950Q4035 950 4058.5 935.5Q4082 921 4101.0 897.0Q4120 873 4129 846V602Q4124 542 4099.5 506.0Q4075 470 4036 470Q3984 470 3955 536Q3927 602 3927 731Q3927 950 4012 950Z"/><rect class="wordmark__rule" x="2290" y="1100" width="2047" height="22"/></svg></a>
+  <p class="mast__flag"><span aria-hidden="true">◆</span> 示例市场 · 模拟交易</p>
 </header>
 
-<section class="hero">
-  <div class="wrap">
-    <span class="eyebrow"><span class="dot" aria-hidden="true"></span>市场 24/7 开放 · CommandAGI 的一家公司</span>
-    <h1>交易初创公司的<em>股权</em>。</h1>
-    <p class="lead">vibeFund 是 vibe 初创公司的市场：真实的公司，按股定价，以 USDC 结算。几秒钟下单，想持多久就持多久，当天就能卖出。下决定之前，先看每位创始人交付了什么。</p>
-    <div class="acts">
-      <a class="btn btn--primary" href="#market">用 25,000 演示资金开始</a>
-      <a class="btn btn--ghost" href="#raise">在 vibeFund 融资</a>
-    </div>
-    <p class="fine">本页所有数字都是示例数据，每一笔交易都在这个浏览器里模拟。不会动用任何资金，任何订单都不会离开本页，这里的一切都不构成出售证券的要约。</p>
-  </div>
-</section>
-
-<div class="ticker" aria-hidden="true">
-  <div class="wrap"><div class="ticker__track" id="ticker-track"></div></div>
-</div>
-
-<section class="band" id="market">
-  <div class="wrap">
-    <div class="band__head">
-      <div>
-        <h2>市场</h2>
-        <p class="sub">vibe 家族的十二家公司，按股定价。这些报价是写进页面里的示例，不从任何地方刷新。</p>
+<main>
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__film">
+    <video class="film" data-film muted loop playsinline preload="metadata" poster="../media/plate.poster.webp" aria-hidden="true" tabindex="-1">
+      <source src="../media/plate.av1.mp4" type='video/mp4; codecs="av01.0.05M.08"'>
+      <source src="../media/plate.h264.mp4" type="video/mp4">
+    </video>
+    <button class="film-toggle" type="button" data-film-toggle aria-pressed="false" data-play="播放影片" data-pause="暂停影片">暂停影片</button></div>
+  <div class="hero__body">
+    <h1 id="hero-title" class="hero__title">初创公司股份，<em>报价精确到分。</em></h1>
+    <div class="hero__side">
+      <p class="hero__lead">私人银行的分寸，交易所的精确。本页每个价格、数量和股东都是示例；每笔交易都只在你的浏览器里运行。</p>
+      <dl class="quote" aria-label="Halvard Ropeworks · 虚构公司">
+        <div class="quote__name"><dt>HALV</dt><dd>Halvard Ropeworks · 虚构公司</dd></div>
+        <div><dt>最新价</dt><dd class="num" data-quote="last">14.62</dd></div>
+        <div><dt>买价</dt><dd class="num" data-quote="bid">14.58</dd></div>
+        <div><dt>卖价</dt><dd class="num" data-quote="ask">14.64</dd></div>
+      </dl>
+      <div class="acts">
+        <a class="btn btn--deed" href="#book">下一笔示例买单</a>
+        <a class="btn btn--line" href="#market">查看市场</a>
       </div>
-      <span class="eyebrow"><span class="dot" aria-hidden="true"></span>示例报价</span>
-    </div>
-
-    <div class="floor">
-      <div>
-        <div class="controls">
-          <label class="sr-only" for="filter">搜索市场</label>
-          <input id="filter" type="search" placeholder="搜索一家公司" autocomplete="off">
-          <label class="sr-only" for="sort">排序方式</label>
-          <select id="sort">
-            <option value="change">涨幅最大</option>
-            <option value="volume">成交最多</option>
-            <option value="price">价格</option>
-            <option value="name">名称</option>
-          </select>
-        </div>
-        <div class="card table-scroll">
-          <table>
-            <caption class="sr-only">vibe 家族的示例股价</caption>
-            <thead>
-              <tr><th scope="col">公司</th><th scope="col">最新价</th><th scope="col">24 小时</th><th scope="col" class="hide-sm">成交量</th><th scope="col" class="hide-sm">7 天</th><th scope="col"><span class="sr-only">交易</span></th></tr>
-            </thead>
-            <tbody id="market-body"></tbody>
-          </table>
-        </div>
-        <noscript><p class="sub" style="margin-top:14px">交易演示需要 JavaScript。页面其余部分不依赖它也能读。</p></noscript>
-      </div>
-
-      <aside class="card ticket" aria-labelledby="ticket-title">
-        <div class="ticket__head">
-          <h3 id="ticket-title"><span id="ticket-name">vibeCAD</span> <span class="ticket__price" id="ticket-ticker">VCAD</span></h3>
-          <span class="ticket__price" id="ticket-price">41.20 USDC</span>
-        </div>
-        <p class="ticket__hint">示例股票。演示资金。持仓保存在你的浏览器里。</p>
-        <div class="field">
-          <label for="qty">股数</label>
-          <div class="row">
-            <input id="qty" type="number" min="1" step="1" value="10" inputmode="numeric">
-            <button class="btn btn--tiny" type="button" id="qty-max">最多</button>
-          </div>
-        </div>
-        <div class="ticket__est">
-          <div><span id="est-label">预计成本</span><b id="est-cost">0.00</b></div>
-          <div><span id="fee-label">手续费（0.20%）</span><b id="est-fee">0.00</b></div>
-          <div><span id="total-label">合计</span><b id="est-total">0.00</b></div>
-        </div>
-        <div class="ticket__acts">
-          <button class="btn btn--buy" type="button" id="ticket-buy">买入</button>
-          <button class="btn btn--sell" type="button" id="ticket-sell">卖出</button>
-        </div>
-        <p class="ticket__note" id="holdings-line"></p>
-        <p class="ticket__note" id="sample-note">示例市场。模拟交易。不涉及任何资金。</p>
-      </aside>
     </div>
   </div>
 </section>
 
-<section class="band" id="portfolio">
-  <div class="wrap">
-    <div class="band__head">
-      <div>
-        <h2>你的账户</h2>
-        <p class="sub">演示现金、持仓和浮动盈亏，保存在这个浏览器的存储里。清掉本站数据，账户就从头开始。</p>
-      </div>
-      <button class="btn btn--tiny" type="button" id="reset">重置演示</button>
+<section class="book" id="book" aria-labelledby="book-title">
+  <header class="folio">
+    <span class="folio__no" aria-hidden="true">II</span>
+    <p class="folio__kicker">订单簿</p>
+    <h2 id="book-title" class="folio__title">Halvard Ropeworks <span class="tag">一家虚构的公司</span></h2>
+    <p class="folio__lead">设定数量和限价。你的买单先吃掉最便宜的卖单；未成交的部分挂在订单簿上。</p>
+  </header>
+  <figure class="vignette">
+    <img src="../media/rope-800.webp" srcset="../media/rope-800.webp 800w, ../media/rope-1600.webp 1600w" sizes="(min-width: 1100px) 30vw, 90vw" width="800" height="450" loading="lazy" decoding="async" alt="一幅石码头上一卷绳索的版画，Halvard Ropeworks 示例股票的插图。">
+  </figure>
+  <div class="book__grid">
+    <div class="ladder" role="group" aria-labelledby="ladder-caption">
+      <p id="ladder-caption" class="sr-only">Halvard Ropeworks 订单簿（示意）</p>
+      <div class="ladder__head" aria-hidden="true"><span>价格</span><span>股数</span></div>
+      <ol class="ladder__asks" id="ladder-asks" aria-label="卖单"></ol>
+      <p class="ladder__mid"><span class="num" id="ladder-mid">14.61</span><span id="ladder-spread"></span></p>
+      <ol class="ladder__bids" id="ladder-bids" aria-label="买单"></ol>
     </div>
-    <div class="stat-row">
-      <div class="card stat"><div class="stat__k">现金</div><div class="stat__v" id="stat-cash">25,000.00</div></div>
-      <div class="card stat"><div class="stat__k">持仓市值</div><div class="stat__v" id="stat-holdings">0.00</div></div>
-      <div class="card stat"><div class="stat__k">账户总值</div><div class="stat__v" id="stat-total">25,000.00</div></div>
-    </div>
-    <div class="card table-scroll">
-      <table class="holdings">
-        <caption class="sr-only">你的演示持仓</caption>
-        <thead><tr><th scope="col">公司</th><th scope="col">股数</th><th scope="col">持仓成本</th><th scope="col">最新价</th><th scope="col">市值</th><th scope="col">浮动盈亏</th></tr></thead>
-        <tbody id="positions-body"></tbody>
+    <form class="bid" id="bid-form" novalidate>
+      <h3>你的买单</h3>
+      <div class="field"><label for="bid-qty">股数</label><input id="bid-qty" type="number" min="1" step="1" value="600" inputmode="numeric"></div>
+      <div class="field"><label for="bid-limit">限价（USDC）</label><input id="bid-limit" type="number" min="0.01" step="0.01" value="14.70" inputmode="decimal"></div>
+      <button class="btn btn--deed" type="submit">提交示例买单</button>
+      <h4 class="bid__fills-title">成交</h4>
+      <ol class="bid__fills" id="bid-fills" aria-live="polite"><li class="empty">还没有成交。</li></ol>
+      <dl class="bid__sum" id="bid-sum">
+        <div><dt>已成交</dt><dd class="num" id="sum-filled">0</dd></div>
+        <div><dt>均价</dt><dd class="num" id="sum-avg">—</dd></div>
+        <div><dt>手续费（0.20%）</dt><dd class="num" id="sum-fee">0.00</dd></div>
+        <div><dt>合计</dt><dd class="num" id="sum-total">0.00</dd></div>
+        <div><dt>挂单中</dt><dd class="num" id="sum-rest">0</dd></div>
+      </dl>
+    </form>
+    <div class="cap">
+      <h3>Halvard 归谁所有</h3>
+      <div class="cap__bar" id="cap-bar" aria-hidden="true"></div>
+      <table class="cap__table">
+        <caption class="sr-only">Halvard Ropeworks 股权结构表（示意）</caption>
+        <thead><tr><th scope="col">股东</th><th scope="col" class="num">股数</th><th scope="col" class="num">持股比例</th></tr></thead>
+        <tbody id="cap-body"></tbody>
       </table>
     </div>
   </div>
+  <p class="note">示意。Halvard Ropeworks 并不存在；它的订单簿、股东和价格都写在本页里。你的买单使用下方账户的演示现金。</p>
 </section>
 
-<section class="band" id="raise">
-  <div class="wrap">
-    <div class="band__head">
-      <div>
-        <h2>在 vibeFund 融资</h2>
-        <p class="sub">创始人用每股一个价格挂出一轮融资。投资人买入股份，USDC 当天结算，订单成交时股权表随之更新。下面是一轮融资对股权表的影响。</p>
+<section class="night" aria-labelledby="night-title">
+  <div class="night__film">
+    <video class="film" data-film muted loop playsinline preload="none" poster="../media/night.poster.webp" aria-hidden="true" tabindex="-1">
+      <source src="../media/night.av1.mp4" type='video/mp4; codecs="av01.0.05M.08"'>
+      <source src="../media/night.h264.mp4" type="video/mp4">
+    </video>
+    <button class="film-toggle" type="button" data-film-toggle aria-pressed="false" data-play="播放影片" data-pause="暂停影片">暂停影片</button></div>
+  <div class="night__body">
+    <h2 id="night-title">订单簿不在五点收盘。</h2>
+    <p>我们正在建设的市场以 USDC 当日结算，夜里和周日也一样。今晚它还是演示。</p>
+    <button class="btn btn--line btn--on-dark" type="button" data-theme-toggle aria-pressed="false" data-on="调暗灯光" data-off="调亮灯光">调暗灯光</button>
+  </div>
+</section>
+
+<section class="market" id="market" aria-labelledby="market-title">
+  <header class="folio folio--row">
+    <span class="folio__no" aria-hidden="true">III</span>
+    <h2 id="market-title" class="folio__title">市场</h2>
+    <p class="folio__lead">vibe 家族的十二家公司，价格是写在页面里的示例，不会更新。</p>
+  </header>
+  <div class="floor">
+    <div class="floor__table">
+      <div class="controls">
+        <label class="sr-only" for="filter">搜索市场</label>
+        <input id="filter" type="search" placeholder="公司或代码" autocomplete="off">
+        <label class="sr-only" for="sort">排序方式</label>
+        <select id="sort">
+          <option value="change">涨跌最大</option>
+          <option value="volume">成交最多</option>
+          <option value="price">价格</option>
+          <option value="name">名称</option>
+        </select>
       </div>
+      <div class="table-scroll">
+        <table class="quotes">
+          <caption class="sr-only">vibe 家族的示例股价</caption>
+          <thead><tr><th scope="col">公司</th><th scope="col" class="num">最新价</th><th scope="col" class="num">24 小时</th><th scope="col" class="num hide-sm">成交量</th><th scope="col" class="hide-sm">7 天</th><th scope="col"><span class="sr-only">交易</span></th></tr></thead>
+          <tbody id="market-body"></tbody>
+        </table>
+      </div>
+      <noscript><p class="note">交易演示需要 JavaScript。页面的其他部分无需它也能阅读。</p></noscript>
     </div>
-    <div class="raise">
-      <div class="card">
-        <h3>条款</h3>
-        <div class="field">
-          <label for="raise-amount">融资额（USDC）</label>
-          <input id="raise-amount" type="number" min="0" step="50000" value="2500000" inputmode="numeric">
-        </div>
-        <div class="field">
-          <label for="raise-pre">投前估值（USDC）</label>
-          <input id="raise-pre" type="number" min="0" step="500000" value="12000000" inputmode="numeric">
-        </div>
-        <div class="field">
-          <label for="raise-shares">已发行股数</label>
-          <input id="raise-shares" type="number" min="1" step="100000" value="10000000" inputmode="numeric">
-        </div>
-        <p class="ticket__note">在公司所有者定下条款之前，挂牌只是一份没有价格的草稿。写信到 <a href="mailto:hello@vibefund.pro">hello@vibefund.pro</a> 开始。</p>
+    <aside class="ticket" aria-labelledby="ticket-title">
+      <h3 id="ticket-title"><span id="ticket-name">vibeCAD</span> <span class="ticket__sym" id="ticket-ticker">VCAD</span></h3>
+      <p class="ticket__price num" id="ticket-price">41.20 USDC</p>
+      <p class="ticket__hint">示例股份。演示现金。持仓保存在你的浏览器里。</p>
+      <div class="field">
+        <label for="qty">股数</label>
+        <div class="row"><input id="qty" type="number" min="1" step="1" value="10" inputmode="numeric"><button class="btn btn--small" type="button" id="qty-max">最大</button></div>
       </div>
-      <div class="card">
-        <h3>股权表的变化</h3>
-        <div class="out" id="raise-out"></div>
+      <dl class="ticket__est">
+        <div><dt id="est-label">预计成本</dt><dd class="num" id="est-cost">0.00</dd></div>
+        <div><dt id="fee-label">手续费（0.20%）</dt><dd class="num" id="est-fee">0.00</dd></div>
+        <div><dt id="total-label">合计</dt><dd class="num" id="est-total">0.00</dd></div>
+      </dl>
+      <div class="ticket__acts">
+        <button class="btn btn--deed" type="button" id="ticket-buy">买入</button>
+        <button class="btn btn--line" type="button" id="ticket-sell">卖出</button>
       </div>
+      <p class="ticket__note" id="holdings-line"></p>
+      <p class="ticket__note" id="sample-note">示例市场。模拟交易。不涉及任何资金。</p>
+    </aside>
+  </div>
+</section>
+
+<section class="statement" id="portfolio" aria-labelledby="portfolio-title">
+  <header class="folio folio--row">
+    <span class="folio__no" aria-hidden="true">IV</span>
+    <h2 id="portfolio-title" class="folio__title">你的对账单</h2>
+    <p class="folio__lead">演示现金、持仓和浮动盈亏保存在这个浏览器里。清除网站数据后会重新开始。</p>
+    <button class="btn btn--small" type="button" id="reset">重置演示</button>
+  </header>
+  <dl class="totals">
+    <div><dt>现金</dt><dd class="num" id="stat-cash">25,000.00</dd></div>
+    <div><dt>持仓</dt><dd class="num" id="stat-holdings">0.00</dd></div>
+    <div><dt>账户总值</dt><dd class="num" id="stat-total">25,000.00</dd></div>
+  </dl>
+  <div class="table-scroll">
+    <table class="holdings">
+      <caption class="sr-only">你的演示持仓</caption>
+      <thead><tr><th scope="col">公司</th><th scope="col" class="num">股数</th><th scope="col" class="num">持仓成本</th><th scope="col" class="num">最新价</th><th scope="col" class="num">市值</th><th scope="col" class="num">浮动盈亏</th></tr></thead>
+      <tbody id="positions-body"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="raise" id="raise" aria-labelledby="raise-title">
+  <header class="folio folio--row">
+    <span class="folio__no" aria-hidden="true">V</span>
+    <h2 id="raise-title" class="folio__title">在 VibeFund 融资</h2>
+    <p class="folio__lead">创始人以每股一个价格开放一轮融资。改变条款，看看这一轮对股权表做了什么。</p>
+  </header>
+  <div class="raise__grid">
+    <div class="raise__terms">
+      <h3>条款</h3>
+      <div class="field"><label for="raise-amount">融资额（USDC）</label><input id="raise-amount" type="number" min="0" step="50000" value="2500000" inputmode="numeric"></div>
+      <div class="field"><label for="raise-pre">投前估值（USDC）</label><input id="raise-pre" type="number" min="0" step="500000" value="12000000" inputmode="numeric"></div>
+      <div class="field"><label for="raise-shares">已发行股数</label><input id="raise-shares" type="number" min="1" step="100000" value="10000000" inputmode="numeric"></div>
+      <p class="note">上市申请在公司所有者设定条款之前只是草稿，没有价格。写信到 <a href="mailto:hello@vibefund.pro">hello@vibefund.pro</a> 开始一份。</p>
+    </div>
+    <div class="raise__result">
+      <h3>对股权表的影响</h3>
+      <div class="split" aria-hidden="true">
+        <div class="split__row"><span>之前</span><div class="split__bar"><i class="split__a split__a--full"></i></div></div>
+        <div class="split__row"><span>之后</span><div class="split__bar"><i class="split__a" id="split-a"></i><i class="split__b" id="split-b"></i></div></div>
+        <p class="split__key"><span class="key key--a"></span>现有股东 <span class="key key--b"></span>新投资人</p>
+      </div>
+      <dl class="out" id="raise-out" aria-live="polite"></dl>
     </div>
   </div>
 </section>
 
-<section class="band" id="how">
-  <div class="wrap">
-    <div class="band__head"><div><h2>怎么运作</h2><p class="sub">四步，每一步都不用等工作日。</p></div></div>
-    <div class="steps">
-      <div class="card step"><div class="step__n">01</div><h3>开户</h3><p>用 CommandAGI 账户登录并通过身份核验。演示两步都不要，它自带演示资金。</p></div>
-      <div class="card step"><div class="step__n">02</div><h3>用 USDC 入金</h3><p>从我们结算的任一网络转入 USDC。转账到账的那一刻，余额就可以用。</p></div>
-      <div class="card step"><div class="step__n">03</div><h3>买入股份</h3><p>选一家公司，填入股数，按挂牌价成交。最小可以买到 1/100 股。</p></div>
-      <div class="card step"><div class="step__n">04</div><h3>随时卖出</h3><p>把股份挂回订单簿。结算是即时的，USDC 随时可以提走。</p></div>
-    </div>
+<section class="how" id="how" aria-labelledby="how-title">
+  <figure class="how__plate"><img src="../media/wheels-800.webp" srcset="../media/wheels-800.webp 800w, ../media/wheels-1600.webp 1600w" sizes="(min-width: 900px) 50vw, 100vw" width="800" height="450" loading="lazy" decoding="async" alt=""></figure>
+  <div class="how__body">
+    <header class="folio"><span class="folio__no" aria-hidden="true">VI</span><h2 id="how-title" class="folio__title">当日完成，四个步骤</h2></header>
+    <ol class="steps"><li><span class="steps__t">T+0 · 01</span><h3>开户</h3><p>一个 CommandAGI 账户和一次身份验证。演示两者都不需要。</p></li><li><span class="steps__t">T+0 · 02</span><h3>存入 USDC</h3><p>从我们结算的链上存入。转账到账即可使用。</p></li><li><span class="steps__t">T+0 · 03</span><h3>买入股份</h3><p>选一家公司，设定数量，按价格结算。可以买到 1/100 股。</p></li><li><span class="steps__t">T+0 · 04</span><h3>随时卖出</h3><p>把股份挂回订单簿。结算即时完成，USDC 可以随时提取。</p></li></ol>
   </div>
 </section>
 
-<section class="band" id="questions">
-  <div class="wrap">
-    <div class="band__head"><div><h2>问答</h2><p class="sub">简短的回答。更长的回答，一封邮件就到。</p></div></div>
-    <details>
-      <summary>这是真实交易吗？</summary>
-      <p>不是。这个第一版是演示：十二家公司和它们的价格都是写进页面里的示例数据，交易只改动你浏览器存储里的数字。真实股份的市场和真实结算，会在所有者发布时开放。</p>
-    </details>
-    <details>
-      <summary>谁能投资？</summary>
-      <p>vibeFund 已注册的司法管辖区内的合格投资人，在此之前没有别人。演示不向你要任何东西，所以请把它当作产品的一张图，而不是一个账户。</p>
-    </details>
-    <details>
-      <summary>钱放在哪里？</summary>
-      <p>USDC 由持牌托管人保管，账户在你名下。vibeFund 不借出、不质押，也不把它放在自己的账上。</p>
-    </details>
-    <details>
-      <summary>费用是多少？</summary>
-      <p>入金和出金免费，每笔交易 0.20%，两项都会在你确认之前显示在订单上。最终费率由所有者在上线前确定。</p>
-    </details>
-    <details>
-      <summary>初创公司怎么挂牌？</summary>
-      <p>创始人设定融资额、投前估值和已发行股数。vibeFund 审核公司和它的文件，然后这一轮按每股一个价格开放。写信到 <a href="mailto:hello@vibefund.pro">hello@vibefund.pro</a>。</p>
-    </details>
+<section class="risk" id="risk" aria-labelledby="risk-title">
+  <div class="risk__frame">
+    <span class="folio__no" aria-hidden="true">VII</span>
+    <h2 id="risk-title">在一切之前，先读这里。</h2>
+    <ol class="risk__list"><li>你投进初创公司的钱可能全部亏掉。大多数初创公司会失败。</li><li>初创公司的股份可能很难卖出。你想卖时，可能没有买家。</li><li>本页的每家公司、价格、订单和股东都是示例。Halvard Ropeworks 是虚构的。</li><li>这里没有任何内容构成证券的出售要约、购买邀请或投资建议。</li><li>上线后，VibeFund 只面向其注册地的合格投资者，在此改变之前不面向其他人。</li></ol>
+    <p class="risk__review"><span aria-hidden="true">§</span> 披露草稿，待法律审阅。</p>
   </div>
 </section>
+
+<section class="faq" id="questions" aria-labelledby="faq-title">
+  <header class="folio folio--row"><span class="folio__no" aria-hidden="true">VIII</span><h2 id="faq-title" class="folio__title">常见问题</h2></header>
+  <div class="faq__list">
+    <details><summary>这是真实交易吗？</summary><p>不是。这些公司和价格是写在页面里的示例数据，交易只改变你浏览器存储里的数字。真实股份和真实结算的市场，要等所有者正式推出后才开放。</p></details>
+    <details><summary>谁可以投资？</summary><p>VibeFund 注册所在司法辖区的合格投资者，在此改变之前不面向其他人。演示什么都不需要，请把它当作产品的样子，而不是一个账户。</p></details>
+    <details><summary>钱放在哪里？</summary><p>以 USDC 形式由持牌托管机构托管，在你名下的账户里。VibeFund 不会出借、质押或把它记在自己的账上。</p></details>
+    <details><summary>费用是多少？</summary><p>存取款免费，每笔交易收取 0.20%，确认前都会显示在交易单上。所有者会在上线前确定最终费率。</p></details>
+    <details><summary>初创公司如何上市？</summary><p>创始人设定融资额、投前估值和已发行股数。VibeFund 审核公司及其文件，然后以每股一个价格开放这一轮。写信到 <a href="mailto:hello@vibefund.pro">hello@vibefund.pro</a>。</p></details>
+  </div>
+</section>
+</main>
 
 <footer class="foot">
-  <div class="wrap">
-    <div class="foot__cols">
-      <div class="foot__pitch">
-        <a class="brand" href="/"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="1" y="1" width="30" height="30" rx="8" fill="#0b0f16" stroke="#1f3a2b"/><path d="M9 22V15M16 22V10M23 22V18" stroke="#8ef0a8" stroke-width="2.6" stroke-linecap="round"/></svg><span class="brand__word">vibeFund</span></a>
-        <p>交易初创公司的股权。CommandAGI 的一家公司，vibefund.pro。</p>
-      </div>
-      <div class="foot__links">
-        <a href="#market">市场</a>
-        <a href="#portfolio">持仓</a>
-        <a href="#raise">融资</a>
-        <a href="mailto:hello@vibefund.pro">hello@vibefund.pro</a>
-      </div>
-    </div>
-    <div class="foot__base">
-      <span>© 2026 VibeFund。示例市场、模拟交易，不构成证券要约。</span>
-      <div class="lang">
-        <button type="button" class="lang-btn" commandfor="lang-dialog" command="show-modal" aria-haspopup="dialog" aria-label="语言" title="语言"><span class="lang-btn__glyph" aria-hidden="true">A<span>/</span><span lang="zh-Hans">文</span></span></button>
-        <noscript><nav class="lang-links" aria-label="语言"><a href="/" hreflang="en">English</a><a href="/es/" hreflang="es">Español</a><a href="/zh/" hreflang="zh-Hans">简体中文</a></nav></noscript>
-        <dialog id="lang-dialog" class="lang-dialog" aria-labelledby="lang-dialog-title" closedby="any">
-          <div class="lang-dialog__box">
-            <div class="lang-dialog__head">
-              <h2 id="lang-dialog-title">语言</h2>
-              <form method="dialog"><button class="lang-dialog__close" aria-label="关闭"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></form>
-            </div>
-            <ul class="lang-list">
-              <li><a href="/" hreflang="en"><span lang="en">English</span></a></li>
-              <li><a href="/es/" hreflang="es"><span lang="es">Español</span></a></li>
-              <li><a href="/zh/" hreflang="zh-Hans" aria-current="true"><span lang="zh-Hans">简体中文</span><svg class="lang-list__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
-            </ul>
-          </div>
-        </dialog>
-      </div>
-    </div>
-  </div>
+  <a class="foot__brand" href="/zh/"><svg class="wordmark wordmark--foot" viewBox="-40 200 4417 1010" role="img" aria-label="VibeFund"><path d="M333 990 73 344Q30 235 -24 235H-27V225H293V235H289Q243 235 228.0 262.5Q213 290 233 339L411 789L594 339Q612 294 589.5 265.5Q567 237 513 235V225H708V235Q689 236 669.5 253.0Q650 270 633.5 294.5Q617 319 607 344L343 990Z M630 975V965H631Q667 965 689.0 943.0Q711 921 711 885V557Q711 519 695.5 498.0Q680 477 630 477V467H732Q783 467 810 456Q835 445 845 429H855V885Q855 921 877.0 943.0Q899 965 935 965H936V975ZM782 366Q746 366 722.5 342.5Q699 319 699 283Q699 247 722.5 223.5Q746 200 782 200Q817 200 840.5 224.0Q864 248 864 283Q864 318 840.5 342.0Q817 366 782 366Z M956 989V315Q956 279 933.5 257.0Q911 235 875 235V225H977Q1036 225 1058.0 214.0Q1080 203 1090 187H1100V551Q1123 506 1164.5 479.0Q1206 452 1256 452Q1315 452 1361.0 487.0Q1407 522 1433.5 582.0Q1460 642 1460 719Q1460 799 1430.5 860.0Q1401 921 1348.0 955.0Q1295 989 1224 989Q1105 989 1064 890L966 989ZM1195 972Q1248 972 1275 906Q1302 840 1302 712Q1302 600 1281 546Q1260 492 1215 492Q1175 492 1144.5 521.0Q1114 550 1100 586V837Q1104 899 1129.0 935.5Q1154 972 1195 972Z M1752 987Q1683 987 1629.5 953.0Q1576 919 1546.0 858.5Q1516 798 1516 720Q1516 640 1549.0 580.0Q1582 520 1639.5 486.5Q1697 453 1770 453Q1831 453 1878.5 477.0Q1926 501 1954.5 544.5Q1983 588 1987 645L1988 660H1652V665Q1652 771 1699.0 834.5Q1746 898 1825 898Q1873 898 1916.5 874.5Q1960 851 1987 811L1996 814Q1979 865 1943.0 904.0Q1907 943 1858.0 965.0Q1809 987 1752 987ZM1653 645H1856Q1856 566 1830.5 517.0Q1805 468 1759 468Q1715 468 1686.0 516.0Q1657 564 1653 645Z M1990 975 1992 965H1995Q2031 965 2053.0 943.0Q2075 921 2075 885V315Q2075 279 2053.0 257.0Q2031 235 1995 235L1994 225H2529L2559 427H2550Q2520 238 2312 238H2229V539H2307Q2357 539 2387.0 507.5Q2417 476 2417 426H2427V676H2417Q2417 622 2384.0 587.0Q2351 552 2297 552H2229V893Q2229 926 2252.0 945.5Q2275 965 2309 965L2310 975Z M2912 1003 2911 874Q2885 925 2832.0 957.0Q2779 989 2720 989Q2653 989 2612.5 945.0Q2572 901 2572 829V557Q2572 519 2557.0 498.0Q2542 477 2491 477V467H2592Q2643 467 2670 456Q2695 445 2705 429H2715V839Q2715 889 2735.0 919.0Q2755 949 2787 949Q2818 949 2851.0 922.5Q2884 896 2909 851V557Q2909 521 2891.0 499.0Q2873 477 2829 477V467H2930Q2981 467 3008 456Q3034 445 3044 429H3054L3053 885Q3053 921 3075.0 943.5Q3097 966 3133 966V975H3034Q3008 975 2988.0 976.5Q2968 978 2955 980Q2928 986 2917 1003Z M3112 975V965H3113Q3149 965 3171.0 943.0Q3193 921 3193 885V557Q3193 519 3177.5 498.0Q3162 477 3112 477V467H3211Q3262 467 3289 456Q3314 445 3324 429H3334L3335 569Q3361 517 3414.0 485.0Q3467 453 3526 453Q3593 453 3633.5 497.0Q3674 541 3674 613V885Q3674 921 3696.0 943.0Q3718 965 3754 965H3755V975H3450V965H3451Q3487 965 3509.0 943.0Q3531 921 3531 885V603Q3531 553 3511.5 523.0Q3492 493 3460 493Q3429 493 3395.5 519.5Q3362 546 3337 591V885Q3337 921 3359.0 943.0Q3381 965 3417 965H3418V975Z M4133 1013 4132 871Q4108 923 4060.0 956.5Q4012 990 3957 990Q3903 990 3860.0 956.0Q3817 922 3792.0 862.5Q3767 803 3767 728Q3767 644 3798.5 582.0Q3830 520 3886.0 486.5Q3942 453 4015 453Q4056 453 4082.0 465.5Q4108 478 4129 508V315Q4129 279 4106.5 257.0Q4084 235 4048 235V225H4150Q4200 225 4226.0 215.0Q4252 205 4263 187H4273V885Q4273 921 4295.0 943.0Q4317 965 4354 965V975H4252Q4208 975 4182.5 984.0Q4157 993 4143 1013ZM4012 950Q4035 950 4058.5 935.5Q4082 921 4101.0 897.0Q4120 873 4129 846V602Q4124 542 4099.5 506.0Q4075 470 4036 470Q3984 470 3955 536Q3927 602 3927 731Q3927 950 4012 950Z"/><rect class="wordmark__rule" x="2290" y="1100" width="2047" height="22"/></svg></a>
+  <p class="foot__pitch">初创公司股份，报价精确到分。CommandAGI 旗下公司，vibefund.pro。</p>
+  <nav class="foot__links" aria-label="栏目"><a href="#book">订单簿</a><a href="#market">市场</a><a href="#portfolio">对账单</a><a href="#raise">融资</a><a href="mailto:hello@vibefund.pro">hello@vibefund.pro</a></nav>
+  <p class="foot__base">© 2026 VibeFund。示例市场，模拟交易，不构成证券要约。</p>
+  <p class="foot__base">本页的影片和版画是生成的图像，不是真实地点或文件的照片。</p>
+  <noscript><nav class="lang-links" aria-label="语言"><a href="/" hreflang="en">English</a><a href="/es/" hreflang="es">Español</a><a href="/zh/" hreflang="zh-Hans">简体中文</a></nav></noscript>
 </footer>
+
+<nav class="fkeys" aria-label="栏目">
+  <div class="fkeys__keys"><a href="#book"><kbd>F1</kbd>订单簿</a><a href="#market"><kbd>F2</kbd>市场</a><a href="#portfolio"><kbd>F3</kbd>对账单</a><a href="#raise"><kbd>F4</kbd>融资</a><a href="#risk"><kbd>F5</kbd>风险</a><a href="#questions"><kbd>F6</kbd>问答</a></div>
+  <div class="fkeys__tape" aria-hidden="true"><div class="fkeys__track" id="ticker-track"></div></div>
+  <button class="fkeys__btn" type="button" data-theme-toggle aria-pressed="false" aria-label="盘后" data-on="盘后" data-off="盘后"><span aria-hidden="true">◐</span><span class="label">盘后</span></button>
+  <button type="button" class="fkeys__btn lang-btn" commandfor="lang-dialog" command="show-modal" aria-haspopup="dialog" aria-label="语言" title="语言"><span aria-hidden="true">A/<span lang="zh-Hans">文</span></span></button>
+</nav>
+
+<dialog id="lang-dialog" class="lang-dialog" aria-labelledby="lang-dialog-title" closedby="any">
+  <div class="lang-dialog__box">
+    <div class="lang-dialog__head">
+      <h2 id="lang-dialog-title">语言</h2>
+      <form method="dialog"><button class="lang-dialog__close" aria-label="关闭">×</button></form>
+    </div>
+    <ul class="lang-list">
+      <li><a href="/" hreflang="en"><span lang="en">English</span></a></li>
+      <li><a href="/es/" hreflang="es"><span lang="es">Español</span></a></li>
+      <li><a href="/zh/" hreflang="zh-Hans" aria-current="true"><span lang="zh-Hans">简体中文</span></a></li>
+    </ul>
+  </div>
+</dialog>
 
 <div class="toast" id="toast" role="status" aria-live="polite" data-show="false"></div>
 <script src="../app.js" defer></script>
