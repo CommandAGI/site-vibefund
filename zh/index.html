@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; font-src 'self'; form-action 'none'; base-uri 'none'">
+<title>vibeFund — 交易初创公司的股权</title>
+<meta name="description" content="vibeFund 是 vibe 初创公司的市场：真实的公司，按股定价，以 USDC 结算。演示用示例公司和模拟资金在你的浏览器里交易。">
+<meta name="theme-color" content="#05070b">
+<meta property="og:title" content="vibeFund — 交易初创公司的股权">
+<meta property="og:description" content="真实的公司，按股定价，以 USDC 结算。CommandAGI 的一家公司。">
+<meta property="og:type" content="website">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="/">
+<link rel="alternate" hreflang="es" href="/es/">
+<link rel="alternate" hreflang="zh-Hans" href="/zh/">
+</head>
+<body>
+<a class="skip" href="#market">跳到市场</a>
+
+<header class="head">
+  <div class="wrap head__in">
+    <a class="brand" href="/">
+      <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="1" y="1" width="30" height="30" rx="8" fill="#0b0f16" stroke="#1f3a2b"/><path d="M9 22V15M16 22V10M23 22V18" stroke="#8ef0a8" stroke-width="2.6" stroke-linecap="round"/></svg>
+      <span class="brand__word">vibeFund</span>
+    </a>
+    <nav aria-label="页面">
+      <a href="#market">市场</a>
+      <a href="#portfolio">持仓</a>
+      <a href="#raise">融资</a>
+      <a href="#questions">问答</a>
+    </nav>
+    <a class="btn btn--primary" href="#market">打开演示</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot" aria-hidden="true"></span>市场 24/7 开放 · CommandAGI 的一家公司</span>
+    <h1>交易初创公司的<em>股权</em>。</h1>
+    <p class="lead">vibeFund 是 vibe 初创公司的市场：真实的公司，按股定价，以 USDC 结算。几秒钟下单，想持多久就持多久，当天就能卖出。下决定之前，先看每位创始人交付了什么。</p>
+    <div class="acts">
+      <a class="btn btn--primary" href="#market">用 25,000 演示资金开始</a>
+      <a class="btn btn--ghost" href="#raise">在 vibeFund 融资</a>
+    </div>
+    <p class="fine">本页所有数字都是示例数据，每一笔交易都在这个浏览器里模拟。不会动用任何资金，任何订单都不会离开本页，这里的一切都不构成出售证券的要约。</p>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="wrap"><div class="ticker__track" id="ticker-track"></div></div>
+</div>
+
+<section class="band" id="market">
+  <div class="wrap">
+    <div class="band__head">
+      <div>
+        <h2>市场</h2>
+        <p class="sub">vibe 家族的十二家公司，按股定价。这些报价是写进页面里的示例，不从任何地方刷新。</p>
+      </div>
+      <span class="eyebrow"><span class="dot" aria-hidden="true"></span>示例报价</span>
+    </div>
+
+    <div class="floor">
+      <div>
+        <div class="controls">
+          <label class="sr-only" for="filter">搜索市场</label>
+          <input id="filter" type="search" placeholder="搜索一家公司" autocomplete="off">
+          <label class="sr-only" for="sort">排序方式</label>
+          <select id="sort">
+            <option value="change">涨幅最大</option>
+            <option value="volume">成交最多</option>
+            <option value="price">价格</option>
+            <option value="name">名称</option>
+          </select>
+        </div>
+        <div class="card table-scroll">
+          <table>
+            <caption class="sr-only">vibe 家族的示例股价</caption>
+            <thead>
+              <tr><th scope="col">公司</th><th scope="col">最新价</th><th scope="col">24 小时</th><th scope="col" class="hide-sm">成交量</th><th scope="col" class="hide-sm">7 天</th><th scope="col"><span class="sr-only">交易</span></th></tr>
+            </thead>
+            <tbody id="market-body"></tbody>
+          </table>
+        </div>
+        <noscript><p class="sub" style="margin-top:14px">交易演示需要 JavaScript。页面其余部分不依赖它也能读。</p></noscript>
+      </div>
+
+      <aside class="card ticket" aria-labelledby="ticket-title">
+        <div class="ticket__head">
+          <h3 id="ticket-title"><span id="ticket-name">vibeCAD</span> <span class="ticket__price" id="ticket-ticker">VCAD</span></h3>
+          <span class="ticket__price" id="ticket-price">41.20 USDC</span>
+        </div>
+        <p class="ticket__hint">示例股票。演示资金。持仓保存在你的浏览器里。</p>
+        <div class="field">
+          <label for="qty">股数</label>
+          <div class="row">
+            <input id="qty" type="number" min="1" step="1" value="10" inputmode="numeric">
+            <button class="btn btn--tiny" type="button" id="qty-max">最多</button>
+          </div>
+        </div>
+        <div class="ticket__est">
+          <div><span id="est-label">预计成本</span><b id="est-cost">0.00</b></div>
+          <div><span id="fee-label">手续费（0.20%）</span><b id="est-fee">0.00</b></div>
+          <div><span id="total-label">合计</span><b id="est-total">0.00</b></div>
+        </div>
+        <div class="ticket__acts">
+          <button class="btn btn--buy" type="button" id="ticket-buy">买入</button>
+          <button class="btn btn--sell" type="button" id="ticket-sell">卖出</button>
+        </div>
+        <p class="ticket__note" id="holdings-line"></p>
+        <p class="ticket__note" id="sample-note">示例市场。模拟交易。不涉及任何资金。</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="portfolio">
+  <div class="wrap">
+    <div class="band__head">
+      <div>
+        <h2>你的账户</h2>
+        <p class="sub">演示现金、持仓和浮动盈亏，保存在这个浏览器的存储里。清掉本站数据，账户就从头开始。</p>
+      </div>
+      <button class="btn btn--tiny" type="button" id="reset">重置演示</button>
+    </div>
+    <div class="stat-row">
+      <div class="card stat"><div class="stat__k">现金</div><div class="stat__v" id="stat-cash">25,000.00</div></div>
+      <div class="card stat"><div class="stat__k">持仓市值</div><div class="stat__v" id="stat-holdings">0.00</div></div>
+      <div class="card stat"><div class="stat__k">账户总值</div><div class="stat__v" id="stat-total">25,000.00</div></div>
+    </div>
+    <div class="card table-scroll">
+      <table class="holdings">
+        <caption class="sr-only">你的演示持仓</caption>
+        <thead><tr><th scope="col">公司</th><th scope="col">股数</th><th scope="col">持仓成本</th><th scope="col">最新价</th><th scope="col">市值</th><th scope="col">浮动盈亏</th></tr></thead>
+        <tbody id="positions-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="raise">
+  <div class="wrap">
+    <div class="band__head">
+      <div>
+        <h2>在 vibeFund 融资</h2>
+        <p class="sub">创始人用每股一个价格挂出一轮融资。投资人买入股份，USDC 当天结算，订单成交时股权表随之更新。下面是一轮融资对股权表的影响。</p>
+      </div>
+    </div>
+    <div class="raise">
+      <div class="card">
+        <h3>条款</h3>
+        <div class="field">
+          <label for="raise-amount">融资额（USDC）</label>
+          <input id="raise-amount" type="number" min="0" step="50000" value="2500000" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="raise-pre">投前估值（USDC）</label>
+          <input id="raise-pre" type="number" min="0" step="500000" value="12000000" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="raise-shares">已发行股数</label>
+          <input id="raise-shares" type="number" min="1" step="100000" value="10000000" inputmode="numeric">
+        </div>
+        <p class="ticket__note">在公司所有者定下条款之前，挂牌只是一份没有价格的草稿。写信到 <a href="mailto:hello@vibefund.pro">hello@vibefund.pro</a> 开始。</p>
+      </div>
+      <div class="card">
+        <h3>股权表的变化</h3>
+        <div class="out" id="raise-out"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="how">
+  <div class="wrap">
+    <div class="band__head"><div><h2>怎么运作</h2><p class="sub">四步，每一步都不用等工作日。</p></div></div>
+    <div class="steps">
+      <div class="card step"><div class="step__n">01</div><h3>开户</h3><p>用 CommandAGI 账户登录并通过身份核验。演示两步都不要，它自带演示资金。</p></div>
+      <div class="card step"><div class="step__n">02</div><h3>用 USDC 入金</h3><p>从我们结算的任一网络转入 USDC。转账到账的那一刻，余额就可以用。</p></div>
+      <div class="card step"><div class="step__n">03</div><h3>买入股份</h3><p>选一家公司，填入股数，按挂牌价成交。最小可以买到 1/100 股。</p></div>
+      <div class="card step"><div class="step__n">04</div><h3>随时卖出</h3><p>把股份挂回订单簿。结算是即时的，USDC 随时可以提走。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="questions">
+  <div class="wrap">
+    <div class="band__head"><div><h2>问答</h2><p class="sub">简短的回答。更长的回答，一封邮件就到。</p></div></div>
+    <details>
+      <summary>这是真实交易吗？</summary>
+      <p>不是。这个第一版是演示：十二家公司和它们的价格都是写进页面里的示例数据，交易只改动你浏览器存储里的数字。真实股份的市场和真实结算，会在所有者发布时开放。</p>
+    </details>
+    <details>
+      <summary>谁能投资？</summary>
+      <p>vibeFund 已注册的司法管辖区内的合格投资人，在此之前没有别人。演示不向你要任何东西，所以请把它当作产品的一张图，而不是一个账户。</p>
+    </details>
+    <details>
+      <summary>钱放在哪里？</summary>
+      <p>USDC 由持牌托管人保管，账户在你名下。vibeFund 不借出、不质押，也不把它放在自己的账上。</p>
+    </details>
+    <details>
+      <summary>费用是多少？</summary>
+      <p>入金和出金免费，每笔交易 0.20%，两项都会在你确认之前显示在订单上。最终费率由所有者在上线前确定。</p>
+    </details>
+    <details>
+      <summary>初创公司怎么挂牌？</summary>
+      <p>创始人设定融资额、投前估值和已发行股数。vibeFund 审核公司和它的文件，然后这一轮按每股一个价格开放。写信到 <a href="mailto:hello@vibefund.pro">hello@vibefund.pro</a>。</p>
+    </details>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__cols">
+      <div class="foot__pitch">
+        <a class="brand" href="/"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="1" y="1" width="30" height="30" rx="8" fill="#0b0f16" stroke="#1f3a2b"/><path d="M9 22V15M16 22V10M23 22V18" stroke="#8ef0a8" stroke-width="2.6" stroke-linecap="round"/></svg><span class="brand__word">vibeFund</span></a>
+        <p>交易初创公司的股权。CommandAGI 的一家公司，vibefund.pro。</p>
+      </div>
+      <div class="foot__links">
+        <a href="#market">市场</a>
+        <a href="#portfolio">持仓</a>
+        <a href="#raise">融资</a>
+        <a href="mailto:hello@vibefund.pro">hello@vibefund.pro</a>
+      </div>
+    </div>
+    <div class="foot__base">
+      <span>© 2026 VibeFund。示例市场、模拟交易，不构成证券要约。</span>
+      <div class="lang">
+        <button type="button" class="lang-btn" commandfor="lang-dialog" command="show-modal" aria-haspopup="dialog" aria-label="语言" title="语言"><span class="lang-btn__glyph" aria-hidden="true">A<span>/</span><span lang="zh-Hans">文</span></span></button>
+        <noscript><nav class="lang-links" aria-label="语言"><a href="/" hreflang="en">English</a><a href="/es/" hreflang="es">Español</a><a href="/zh/" hreflang="zh-Hans">简体中文</a></nav></noscript>
+        <dialog id="lang-dialog" class="lang-dialog" aria-labelledby="lang-dialog-title" closedby="any">
+          <div class="lang-dialog__box">
+            <div class="lang-dialog__head">
+              <h2 id="lang-dialog-title">语言</h2>
+              <form method="dialog"><button class="lang-dialog__close" aria-label="关闭"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></form>
+            </div>
+            <ul class="lang-list">
+              <li><a href="/" hreflang="en"><span lang="en">English</span></a></li>
+              <li><a href="/es/" hreflang="es"><span lang="es">Español</span></a></li>
+              <li><a href="/zh/" hreflang="zh-Hans" aria-current="true"><span lang="zh-Hans">简体中文</span><svg class="lang-list__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            </ul>
+          </div>
+        </dialog>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite" data-show="false"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; font-src 'self'; form-action 'none'; base-uri 'none'">
+<title>vibeFund — compra acciones de startups</title>
+<meta name="description" content="vibeFund es el mercado de las startups vibe: empresas reales, con precio por acción y liquidación en USDC. La demo opera startups de muestra con dinero simulado en tu navegador.">
+<meta name="theme-color" content="#05070b">
+<meta property="og:title" content="vibeFund — compra acciones de startups">
+<meta property="og:description" content="Empresas reales, con precio por acción y liquidación en USDC. Una empresa de CommandAGI.">
+<meta property="og:type" content="website">
+<link rel="icon" href="../mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" hreflang="en" href="/">
+<link rel="alternate" hreflang="es" href="/es/">
+<link rel="alternate" hreflang="zh-Hans" href="/zh/">
+</head>
+<body>
+<a class="skip" href="#market">Ir al mercado</a>
+
+<header class="head">
+  <div class="wrap head__in">
+    <a class="brand" href="/">
+      <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="1" y="1" width="30" height="30" rx="8" fill="#0b0f16" stroke="#1f3a2b"/><path d="M9 22V15M16 22V10M23 22V18" stroke="#8ef0a8" stroke-width="2.6" stroke-linecap="round"/></svg>
+      <span class="brand__word">vibeFund</span>
+    </a>
+    <nav aria-label="Secciones">
+      <a href="#market">Mercado</a>
+      <a href="#portfolio">Cartera</a>
+      <a href="#raise">Rondas</a>
+      <a href="#questions">Preguntas</a>
+    </nav>
+    <a class="btn btn--primary" href="#market">Abrir la demo</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot" aria-hidden="true"></span>Mercado abierto 24/7 · una empresa de CommandAGI</span>
+    <h1>Compra acciones de <em>startups</em>.</h1>
+    <p class="lead">vibeFund es el mercado de las startups vibe: empresas reales, con precio por acción y liquidación en USDC. Compra en segundos, mantén lo que quieras y vende el mismo día. Mira lo que publica cada fundador antes de decidir.</p>
+    <div class="acts">
+      <a class="btn btn--primary" href="#market">Empieza con 25.000 en efectivo de demo</a>
+      <a class="btn btn--ghost" href="#raise">Levanta capital en vibeFund</a>
+    </div>
+    <p class="fine">Todas las cifras de esta página son datos de muestra y cada operación se simula en este navegador. No se mueve dinero, ninguna orden sale de la página y nada de esto es una oferta de venta de valores.</p>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="wrap"><div class="ticker__track" id="ticker-track"></div></div>
+</div>
+
+<section class="band" id="market">
+  <div class="wrap">
+    <div class="band__head">
+      <div>
+        <h2>El mercado</h2>
+        <p class="sub">Doce empresas de la familia vibe, con precio por acción. Las cotizaciones son muestras escritas en la página, actualizadas en ningún sitio.</p>
+      </div>
+      <span class="eyebrow"><span class="dot" aria-hidden="true"></span>Cotizaciones de muestra</span>
+    </div>
+
+    <div class="floor">
+      <div>
+        <div class="controls">
+          <label class="sr-only" for="filter">Buscar en el mercado</label>
+          <input id="filter" type="search" placeholder="Busca una empresa" autocomplete="off">
+          <label class="sr-only" for="sort">Ordenar por</label>
+          <select id="sort">
+            <option value="change">Mayor movimiento</option>
+            <option value="volume">Más negociadas</option>
+            <option value="price">Precio</option>
+            <option value="name">Nombre</option>
+          </select>
+        </div>
+        <div class="card table-scroll">
+          <table>
+            <caption class="sr-only">Precios de muestra de las empresas de la familia vibe</caption>
+            <thead>
+              <tr><th scope="col">Empresa</th><th scope="col">Último</th><th scope="col">24 h</th><th scope="col" class="hide-sm">Volumen</th><th scope="col" class="hide-sm">7 d</th><th scope="col"><span class="sr-only">Operar</span></th></tr>
+            </thead>
+            <tbody id="market-body"></tbody>
+          </table>
+        </div>
+        <noscript><p class="sub" style="margin-top:14px">La demo de operaciones necesita JavaScript. El resto de la página se lee sin él.</p></noscript>
+      </div>
+
+      <aside class="card ticket" aria-labelledby="ticket-title">
+        <div class="ticket__head">
+          <h3 id="ticket-title"><span id="ticket-name">vibeCAD</span> <span class="ticket__price" id="ticket-ticker">VCAD</span></h3>
+          <span class="ticket__price" id="ticket-price">41,20 USDC</span>
+        </div>
+        <p class="ticket__hint">Acciones de muestra. Efectivo de demo. Tu navegador guarda la posición.</p>
+        <div class="field">
+          <label for="qty">Acciones</label>
+          <div class="row">
+            <input id="qty" type="number" min="1" step="1" value="10" inputmode="numeric">
+            <button class="btn btn--tiny" type="button" id="qty-max">Máx.</button>
+          </div>
+        </div>
+        <div class="ticket__est">
+          <div><span id="est-label">Coste estimado</span><b id="est-cost">0,00</b></div>
+          <div><span id="fee-label">Comisión (0,20 %)</span><b id="est-fee">0,00</b></div>
+          <div><span id="total-label">Total</span><b id="est-total">0,00</b></div>
+        </div>
+        <div class="ticket__acts">
+          <button class="btn btn--buy" type="button" id="ticket-buy">Comprar</button>
+          <button class="btn btn--sell" type="button" id="ticket-sell">Vender</button>
+        </div>
+        <p class="ticket__note" id="holdings-line"></p>
+        <p class="ticket__note" id="sample-note">Mercado de muestra. Operaciones simuladas. No se mueve dinero.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="portfolio">
+  <div class="wrap">
+    <div class="band__head">
+      <div>
+        <h2>Tu cuenta</h2>
+        <p class="sub">Efectivo de demo, posiciones y ganancia abierta, guardados en el almacenamiento de este navegador. Si borras los datos del sitio, la cuenta empieza otra vez.</p>
+      </div>
+      <button class="btn btn--tiny" type="button" id="reset">Reiniciar la demo</button>
+    </div>
+    <div class="stat-row">
+      <div class="card stat"><div class="stat__k">Efectivo</div><div class="stat__v" id="stat-cash">25.000,00</div></div>
+      <div class="card stat"><div class="stat__k">Posiciones</div><div class="stat__v" id="stat-holdings">0,00</div></div>
+      <div class="card stat"><div class="stat__k">Valor de la cuenta</div><div class="stat__v" id="stat-total">25.000,00</div></div>
+    </div>
+    <div class="card table-scroll">
+      <table class="holdings">
+        <caption class="sr-only">Tus posiciones de demo</caption>
+        <thead><tr><th scope="col">Empresa</th><th scope="col">Acciones</th><th scope="col">Coste medio</th><th scope="col">Último</th><th scope="col">Valor</th><th scope="col">G/P abierta</th></tr></thead>
+        <tbody id="positions-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="raise">
+  <div class="wrap">
+    <div class="band__head">
+      <div>
+        <h2>Levanta capital en vibeFund</h2>
+        <p class="sub">El fundador publica una ronda con un precio por acción. Los inversores toman acciones, el USDC se liquida el mismo día y la tabla de capital se actualiza mientras se llenan las órdenes. Esto es lo que una ronda le hace a la tabla.</p>
+      </div>
+    </div>
+    <div class="raise">
+      <div class="card">
+        <h3>Términos</h3>
+        <div class="field">
+          <label for="raise-amount">Ronda (USDC)</label>
+          <input id="raise-amount" type="number" min="0" step="50000" value="2500000" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="raise-pre">Valoración pre-money (USDC)</label>
+          <input id="raise-pre" type="number" min="0" step="500000" value="12000000" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="raise-shares">Acciones en circulación</label>
+          <input id="raise-shares" type="number" min="1" step="100000" value="10000000" inputmode="numeric">
+        </div>
+        <p class="ticket__note">Una lista es un borrador sin precio hasta que la empresa fija sus términos. Escribe a <a href="mailto:hello@vibefund.pro">hello@vibefund.pro</a> para empezar.</p>
+      </div>
+      <div class="card">
+        <h3>Qué le hace a la tabla</h3>
+        <div class="out" id="raise-out"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="how">
+  <div class="wrap">
+    <div class="band__head"><div><h2>Cómo funciona</h2><p class="sub">Cuatro pasos, y ninguno espera a un día laborable.</p></div></div>
+    <div class="steps">
+      <div class="card step"><div class="step__n">01</div><h3>Abre una cuenta</h3><p>Entra con una cuenta de CommandAGI y una verificación de identidad. La demo no pide ninguna de las dos: corre con efectivo de demo.</p></div>
+      <div class="card step"><div class="step__n">02</div><h3>Fondéala con USDC</h3><p>Deposita USDC desde cualquiera de las redes donde liquidamos. El saldo está disponible en cuanto llega la transferencia.</p></div>
+      <div class="card step"><div class="step__n">03</div><h3>Toma acciones</h3><p>Elige una empresa, pon una cantidad y liquida al precio de la lista. Se admiten fracciones hasta 1/100 de acción.</p></div>
+      <div class="card step"><div class="step__n">04</div><h3>Vende cuando quieras</h3><p>Devuelve tus acciones al libro. La liquidación es instantánea y el USDC es tuyo para retirar.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="questions">
+  <div class="wrap">
+    <div class="band__head"><div><h2>Preguntas</h2><p class="sub">Las respuestas cortas. La larga está a un correo de distancia.</p></div></div>
+    <details>
+      <summary>¿Es una operación real?</summary>
+      <p>No. Esta primera versión es una demo: las doce empresas y sus precios son datos de muestra escritos en la página, y las operaciones cambian números en el almacenamiento de tu navegador. El mercado de acciones reales, con liquidación real, abre cuando su dueño lo lance.</p>
+    </details>
+    <details>
+      <summary>¿Quién puede invertir?</summary>
+      <p>Inversores acreditados en las jurisdicciones donde vibeFund está registrada, y nadie más hasta que eso cambie. La demo no pide nada, así que tómala como una imagen del producto, no como una cuenta.</p>
+    </details>
+    <details>
+      <summary>¿Dónde está el dinero?</summary>
+      <p>USDC en custodia con el custodio autorizado, en una cuenta a tu nombre. vibeFund no lo presta, no lo apuesta y no lo guarda en su propio balance.</p>
+    </details>
+    <details>
+      <summary>¿Cuánto cuesta?</summary>
+      <p>Sin comisión de depósito ni de retiro, y 0,20 % por operación, ambos en el ticket antes de confirmar. El dueño fija la tarifa final antes del lanzamiento.</p>
+    </details>
+    <details>
+      <summary>¿Cómo se lista una startup?</summary>
+      <p>El fundador fija la ronda, la valoración pre-money y las acciones en circulación. vibeFund revisa la empresa y sus documentos, y la ronda abre a un precio por acción. Escribe a <a href="mailto:hello@vibefund.pro">hello@vibefund.pro</a>.</p>
+    </details>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__cols">
+      <div class="foot__pitch">
+        <a class="brand" href="/"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="1" y="1" width="30" height="30" rx="8" fill="#0b0f16" stroke="#1f3a2b"/><path d="M9 22V15M16 22V10M23 22V18" stroke="#8ef0a8" stroke-width="2.6" stroke-linecap="round"/></svg><span class="brand__word">vibeFund</span></a>
+        <p>Compra acciones de startups. Una empresa de CommandAGI, en vibefund.pro.</p>
+      </div>
+      <div class="foot__links">
+        <a href="#market">Mercado</a>
+        <a href="#portfolio">Cartera</a>
+        <a href="#raise">Rondas</a>
+        <a href="mailto:hello@vibefund.pro">hello@vibefund.pro</a>
+      </div>
+    </div>
+    <div class="foot__base">
+      <span>© 2026 VibeFund. Mercado de muestra, operaciones simuladas, sin oferta de valores.</span>
+      <div class="lang">
+        <button type="button" class="lang-btn" commandfor="lang-dialog" command="show-modal" aria-haspopup="dialog" aria-label="Idioma" title="Idioma"><span class="lang-btn__glyph" aria-hidden="true">A<span>/</span><span lang="zh-Hans">文</span></span></button>
+        <noscript><nav class="lang-links" aria-label="Idiomas"><a href="/" hreflang="en">English</a><a href="/es/" hreflang="es">Español</a><a href="/zh/" hreflang="zh-Hans">简体中文</a></nav></noscript>
+        <dialog id="lang-dialog" class="lang-dialog" aria-labelledby="lang-dialog-title" closedby="any">
+          <div class="lang-dialog__box">
+            <div class="lang-dialog__head">
+              <h2 id="lang-dialog-title">Idioma</h2>
+              <form method="dialog"><button class="lang-dialog__close" aria-label="Cerrar"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></form>
+            </div>
+            <ul class="lang-list">
+              <li><a href="/" hreflang="en"><span lang="en">English</span></a></li>
+              <li><a href="/es/" hreflang="es" aria-current="true"><span lang="es">Español</span><svg class="lang-list__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+              <li><a href="/zh/" hreflang="zh-Hans"><span lang="zh-Hans">简体中文</span></a></li>
+            </ul>
+          </div>
+        </dialog>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite" data-show="false"></div>
+<script src="../app.js" defer></script>
+</body>
+</html>
